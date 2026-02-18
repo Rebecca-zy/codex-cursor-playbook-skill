@@ -547,19 +547,19 @@ select {
 }
 
 .task-item.overdue {
-  border-color: var(--error);
-  background: var(--error-light);
-  border-left-width: 2px;
-  border-left-color: var(--error);
+  border-color: rgba(211, 47, 47, 0.35);
+  background: rgba(211, 47, 47, 0.06);
+  border-left-width: 3px;
+  border-left-color: rgba(211, 47, 47, 0.65);
 }
 
 .task-item.overdue .task-text {
-  color: var(--error);
+  color: var(--text);
   font-weight: var(--font-weight-normal);
 }
 
 .task-item.overdue:hover {
-  border-color: var(--error);
+  border-color: rgba(211, 47, 47, 0.45);
 }
 
 .task-item input[type="checkbox"] {
@@ -947,13 +947,59 @@ select {
   .task-item {
     grid-template-columns: auto 1fr auto;
     gap: var(--spacing-4);
-    padding: var(--spacing-4) var(--spacing-5);
+    padding: 14px var(--spacing-5);
+    min-height: 56px;
   }
   
   .task-text-wrap {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
     align-items: center;
-    flex-wrap: wrap;
-    gap: var(--spacing-2);
+    column-gap: var(--spacing-2);
+    row-gap: 6px;
+    justify-content: start;
+    min-width: 0;
+  }
+
+  .task-text-wrap .task-text {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-right: 0;
+  }
+
+  .task-text-wrap .task-priority {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .task-text-wrap .task-due-date {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .task-text-wrap:not(:has(.task-priority)) .task-due-date {
+    grid-column: 1;
+  }
+
+  .task-text-wrap .task-edit-container {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+
+  .task-actions {
+    margin-left: 0;
+    justify-content: flex-end;
+    justify-self: end;
+    align-self: center;
+  }
+
+  .task-actions .btn {
+    min-width: 48px;
+    min-height: 34px;
+    padding: 6px 10px;
   }
   
   .add-task-form {
