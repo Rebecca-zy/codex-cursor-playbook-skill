@@ -13,6 +13,12 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  padding: 0;
+}
+
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 body {
@@ -149,7 +155,10 @@ select {
   min-height: 100vh;
   max-width: 640px;
   margin: 0 auto;
-  padding: var(--spacing-6) var(--spacing-4);
+  padding: max(var(--spacing-6), env(safe-area-inset-top)) 
+           max(var(--spacing-4), env(safe-area-inset-right)) 
+           max(var(--spacing-6), env(safe-area-inset-bottom)) 
+           max(var(--spacing-4), env(safe-area-inset-left));
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -174,11 +183,12 @@ select {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
+  padding: 0 var(--spacing-2);
 }
 
 /* ===== Add task (US1) ===== */
 .add-task-section {
-  padding: var(--spacing-6);
+  padding: var(--spacing-5) var(--spacing-4);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
@@ -378,7 +388,7 @@ select {
 
 /* ===== Filters (US3) ===== */
 .filters-section {
-  padding: var(--spacing-4) var(--spacing-5);
+  padding: var(--spacing-4) var(--spacing-4);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
@@ -455,7 +465,7 @@ select {
 }
 
 .task-group {
-  padding: var(--spacing-6);
+  padding: var(--spacing-5) var(--spacing-4);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
@@ -500,8 +510,8 @@ select {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4) var(--spacing-5);
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
@@ -553,16 +563,17 @@ select {
 }
 
 .task-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
   transition: opacity var(--transition-fast);
-  padding: 13px;
-  margin: -13px;
+  padding: 12px;
+  margin: -12px;
   border-radius: var(--radius-xs);
   position: relative;
+  align-self: center;
 }
 
 .task-item input[type="checkbox"]:hover {
@@ -589,7 +600,9 @@ select {
   flex-direction: column;
   gap: var(--spacing-2);
   justify-content: center;
-  padding: 0 var(--spacing-2);
+  padding: 0 var(--spacing-3);
+  flex: 1;
+  align-items: flex-start;
 }
 
 .task-text {
@@ -654,14 +667,16 @@ select {
   flex-shrink: 0;
   align-items: center;
   justify-content: flex-end;
+  margin-left: auto;
 }
 
 .task-actions .btn {
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-normal);
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 36px;
+  min-width: 60px;
+  white-space: nowrap;
 }
 
 .task-edit-container {
@@ -742,7 +757,10 @@ select {
 @media (max-width: 479px) {
   .app {
     max-width: 100%;
-    padding: var(--spacing-5) var(--spacing-4);
+    padding: max(var(--spacing-5), env(safe-area-inset-top)) 
+             max(var(--spacing-3), env(safe-area-inset-right)) 
+             max(var(--spacing-5), env(safe-area-inset-bottom)) 
+             max(var(--spacing-3), env(safe-area-inset-left));
   }
   
   .header {
@@ -756,12 +774,13 @@ select {
   
   .main {
     gap: var(--spacing-5);
+    padding: 0 var(--spacing-1);
   }
   
   .add-task-section,
   .filters-section,
   .task-group {
-    padding: var(--spacing-5);
+    padding: var(--spacing-4) var(--spacing-3);
     border-radius: var(--radius-md);
     margin: 0;
   }
@@ -802,7 +821,7 @@ select {
   
   .task-item {
     grid-template-columns: auto 1fr;
-    padding: var(--spacing-4) var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-3);
     gap: var(--spacing-3);
     min-height: auto;
   }
@@ -818,7 +837,7 @@ select {
   
   .task-text-wrap {
     grid-column: 2;
-    padding: 0;
+    padding: 0 var(--spacing-2);
     gap: var(--spacing-2);
   }
   
@@ -832,7 +851,7 @@ select {
   
   .task-actions .btn {
     flex: 0 1 auto;
-    min-width: 80px;
+    min-width: 70px;
   }
   
   .task-group-heading {
@@ -849,7 +868,14 @@ select {
 @media (min-width: 480px) and (max-width: 768px) {
   .app {
     max-width: 100%;
-    padding: var(--spacing-6) var(--spacing-5);
+    padding: max(var(--spacing-6), env(safe-area-inset-top)) 
+             max(var(--spacing-4), env(safe-area-inset-right)) 
+             max(var(--spacing-6), env(safe-area-inset-bottom)) 
+             max(var(--spacing-4), env(safe-area-inset-left));
+  }
+  
+  .main {
+    padding: 0 var(--spacing-2);
   }
   
   .add-task-form {
@@ -894,19 +920,27 @@ select {
 @media (min-width: 769px) {
   .app {
     max-width: 720px;
-    padding: var(--spacing-8) var(--spacing-6);
+    padding: max(var(--spacing-8), env(safe-area-inset-top)) 
+             max(var(--spacing-6), env(safe-area-inset-right)) 
+             max(var(--spacing-8), env(safe-area-inset-bottom)) 
+             max(var(--spacing-6), env(safe-area-inset-left));
+  }
+  
+  .main {
+    padding: 0 var(--spacing-3);
   }
   
   .task-item {
     grid-template-columns: auto 1fr auto;
-    gap: var(--spacing-5);
-    padding: var(--spacing-5) var(--spacing-6);
+    gap: var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-5);
   }
   
   .task-text-wrap {
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
+    padding: 0 var(--spacing-3);
   }
   
   .add-task-form {
