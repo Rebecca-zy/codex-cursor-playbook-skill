@@ -208,7 +208,7 @@ let currentFilter = "all";
 
 function showStorageError(message) {
   if (!storageErrorEl) return;
-  storageErrorEl.textContent = message || "Storage is full. Changes will not be saved.";
+  storageErrorEl.textContent = message || "存储空间已满。更改将不会被保存。";
   storageErrorEl.hidden = false;
 }
 window.showStorageError = showStorageError;
@@ -232,7 +232,7 @@ function renderTaskItem(task) {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = task.completed;
-  checkbox.setAttribute("aria-label", task.completed ? "Mark task incomplete" : "Mark task complete");
+  checkbox.setAttribute("aria-label", task.completed ? "标记任务为未完成" : "标记任务为已完成");
   checkbox.addEventListener("change", () => handleToggleComplete(task.id));
 
   const textWrap = document.createElement("div");
@@ -245,8 +245,9 @@ function renderTaskItem(task) {
   if (task.priority && task.priority !== "medium") {
     const prioritySpan = document.createElement("span");
     prioritySpan.className = `task-priority priority-${task.priority}`;
-    prioritySpan.textContent = task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
-    prioritySpan.setAttribute("aria-label", `Priority: ${task.priority}`);
+    const priorityMap = { low: "低", medium: "中", high: "高" };
+    prioritySpan.textContent = priorityMap[task.priority] || task.priority;
+    prioritySpan.setAttribute("aria-label", `优先级：${priorityMap[task.priority] || task.priority}`);
     textWrap.appendChild(prioritySpan);
   }
 
@@ -254,8 +255,8 @@ function renderTaskItem(task) {
     const dueDateSpan = document.createElement("span");
     dueDateSpan.className = "task-due-date" + (isOverdue ? " overdue" : "");
     const dueDate = new Date(task.dueDate);
-    dueDateSpan.textContent = dueDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    dueDateSpan.setAttribute("aria-label", `Due date: ${dueDate.toLocaleDateString()}`);
+    dueDateSpan.textContent = dueDate.toLocaleDateString("zh-CN", { month: "short", day: "numeric" });
+    dueDateSpan.setAttribute("aria-label", `截止日期：${dueDate.toLocaleDateString("zh-CN")}`);
     textWrap.appendChild(dueDateSpan);
   }
 
@@ -264,14 +265,14 @@ function renderTaskItem(task) {
   const editBtn = document.createElement("button");
   editBtn.type = "button";
   editBtn.className = "btn btn-edit";
-  editBtn.textContent = "Edit";
-  editBtn.setAttribute("aria-label", "Edit task");
+  editBtn.textContent = "编辑";
+  editBtn.setAttribute("aria-label", "编辑任务");
   editBtn.addEventListener("click", () => startEdit(task.id));
   const deleteBtn = document.createElement("button");
   deleteBtn.type = "button";
   deleteBtn.className = "btn btn-delete";
-  deleteBtn.textContent = "Delete";
-  deleteBtn.setAttribute("aria-label", "Delete task");
+  deleteBtn.textContent = "删除";
+  deleteBtn.setAttribute("aria-label", "删除任务");
   deleteBtn.addEventListener("click", () => handleDelete(task.id));
   actions.appendChild(editBtn);
   actions.appendChild(deleteBtn);
@@ -358,21 +359,22 @@ function startEdit(taskId) {
   input.type = "text";
   input.className = "task-edit-input";
   input.value = task.text;
-  input.setAttribute("aria-label", "Edit task text");
+  input.setAttribute("aria-label", "编辑任务文本");
   
   const dateInput = document.createElement("input");
   dateInput.type = "date";
   dateInput.className = "task-edit-date-input";
   dateInput.value = task.dueDate || "";
-  dateInput.setAttribute("aria-label", "Edit due date");
+  dateInput.setAttribute("aria-label", "编辑截止日期");
   
   const prioritySelectEdit = document.createElement("select");
   prioritySelectEdit.className = "task-edit-priority-select";
-  prioritySelectEdit.setAttribute("aria-label", "Edit priority");
+  prioritySelectEdit.setAttribute("aria-label", "编辑优先级");
+  const priorityMap = { low: "低", medium: "中", high: "高" };
   ["low", "medium", "high"].forEach((p) => {
     const option = document.createElement("option");
     option.value = p;
-    option.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    option.textContent = priorityMap[p];
     if (task.priority === p) option.selected = true;
     prioritySelectEdit.appendChild(option);
   });
@@ -393,7 +395,7 @@ function startEdit(taskId) {
     if (newText) {
       TaskManager.updateTask(taskId, { text: newText, dueDate: newDueDate, priority: newPriority });
       persistAndRender();
-      announceToScreenReader("Task updated");
+      announceToScreenReader("任务已更新");
     } else {
       textWrap.innerHTML = originalContent;
       li.appendChild(li.querySelector(".task-actions"));
@@ -428,13 +430,13 @@ function handleToggleComplete(taskId) {
   TaskManager.toggleTaskComplete(taskId);
   persistAndRender();
   const task = TaskManager.getAllTasks().find((t) => t.id === taskId);
-  announceToScreenReader(task && task.completed ? "Task marked complete" : "Task marked incomplete");
+  announceToScreenReader(task && task.completed ? "任务已标记为已完成" : "任务已标记为未完成");
 }
 
 function handleDelete(taskId) {
   TaskManager.deleteTask(taskId);
   persistAndRender();
-  announceToScreenReader("Task deleted");
+  announceToScreenReader("任务已删除");
 }
 
 function persistAndRender() {
@@ -453,7 +455,7 @@ function addTaskFromInput() {
   if (dueDateInput) dueDateInput.value = "";
   if (prioritySelect) prioritySelect.value = "medium";
   persistAndRender();
-  announceToScreenReader("Task added");
+  announceToScreenReader("任务已添加");
 }
 
 function handleFilterChange(filter) {
