@@ -194,12 +194,13 @@ select {
   flex-wrap: wrap;
   gap: var(--spacing-3);
   align-items: flex-end;
+  min-width: 0;
 }
 
 .add-task-form input[type="text"],
 .add-task-form input[type="date"] {
   flex: 1;
-  min-width: 160px;
+  min-width: 0;
   padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
@@ -240,15 +241,15 @@ select {
 }
 
 .add-task-form input[type="date"] {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   min-width: 140px;
   max-width: 180px;
 }
 
 .add-task-form .priority-select {
-  flex: 0 0 auto;
-  min-width: 100px;
-  max-width: 140px;
+  flex: 0 1 auto;
+  min-width: 120px;
+  max-width: 160px;
   padding: var(--spacing-3) var(--spacing-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
@@ -265,7 +266,7 @@ select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a4845' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--spacing-3) center;
-  padding-right: var(--spacing-8);
+  padding-right: calc(var(--spacing-8) + var(--spacing-2));
 }
 
 .add-task-form .priority-select:hover {
@@ -773,6 +774,11 @@ select {
     min-width: 100%;
     max-width: 100%;
     width: 100%;
+    flex: 1 1 100%;
+  }
+  
+  .add-task-form .priority-select {
+    padding-right: calc(var(--spacing-8) + var(--spacing-2));
   }
   
   .btn {
@@ -843,18 +849,26 @@ select {
   
   .add-task-form input[type="text"] {
     flex: 1 1 100%;
-    min-width: 100%;
+    min-width: 0;
+    width: 100%;
   }
   
   .add-task-form input[type="date"],
   .add-task-form .priority-select {
     flex: 1 1 calc(50% - var(--spacing-2));
     min-width: calc(50% - var(--spacing-2));
+    max-width: calc(50% - var(--spacing-2));
+  }
+  
+  .add-task-form .priority-select {
+    min-width: 120px;
+    padding-right: calc(var(--spacing-8) + var(--spacing-2));
   }
   
   .add-task-form .btn-add {
     flex: 1 1 100%;
     width: 100%;
+    min-width: 0;
   }
   
   .filters {
@@ -879,21 +893,26 @@ select {
   }
   
   .add-task-form input[type="text"] {
-    flex: 2;
+    flex: 2 1 0;
+    min-width: 0;
   }
   
   .add-task-form input[type="date"] {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 140px;
     max-width: 180px;
   }
   
   .add-task-form .priority-select {
-    flex: 1;
-    max-width: 140px;
+    flex: 0 1 auto;
+    min-width: 120px;
+    max-width: 160px;
+    padding-right: calc(var(--spacing-8) + var(--spacing-2));
   }
   
   .add-task-form .btn-add {
     flex: 0 0 auto;
+    min-width: fit-content;
   }
 }
 
