@@ -3,107 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login • Nova App</title>
+    <title>TODO List • Personal Planning</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="page">
-      <section class="login-card" aria-labelledby="login-title">
-        <div class="card-glow" aria-hidden="true"></div>
+    <div class="app" role="application" aria-label="Todo list application">
+      <header class="header" role="banner">
+        <h1 id="app-title" class="title">My Tasks</h1>
+      </header>
 
-        <header class="brand">
-          <div class="logo" aria-hidden="true">N</div>
-          <div>
-            <p class="brand-kicker">Welcome back</p>
-            <h1 id="login-title">Nova App</h1>
-          </div>
-        </header>
-
-        <p class="subtitle">Sign in to continue to your dashboard.</p>
-
-        <form id="loginForm" class="login-form" novalidate>
-          <div class="field-group">
-            <label for="email">Email</label>
-            <div class="input-wrap">
-              <span class="field-icon" aria-hidden="true">✉</span>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-                aria-describedby="emailError"
-                required
-              />
-            </div>
-            <p class="error" id="emailError" aria-live="polite"></p>
-          </div>
-
-          <div class="field-group">
-            <label for="password">Password</label>
-            <div class="password-wrap input-wrap">
-              <span class="field-icon" aria-hidden="true">🔒</span>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Enter your password"
-                minlength="6"
-                aria-describedby="passwordError"
-                required
-              />
-              <button
-                type="button"
-                class="toggle-password"
-                id="togglePassword"
-                aria-label="Show password"
-                aria-pressed="false"
-              >
-                Show
-              </button>
-            </div>
-            <p class="error" id="passwordError" aria-live="polite"></p>
-          </div>
-
-          <div class="row between">
-            <label class="checkbox-wrap" for="remember">
-              <input type="checkbox" id="remember" name="remember" />
-              <span>Remember me</span>
-            </label>
-            <a class="link" href="#" aria-label="Forgot password">Forgot password?</a>
-          </div>
-
-          <button id="loginBtn" class="btn btn-primary" type="submit">
-            <span class="btn-text">Login</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-
-          <p class="success" id="successMessage" aria-live="polite"></p>
-
-          <div class="divider" role="presentation">
-            <span>or continue with</span>
-          </div>
-
-          <div class="social-actions">
-            <button type="button" class="btn btn-social" aria-label="Continue with Google">
-              <span class="social-icon" aria-hidden="true">G</span>
-              Google
+      <main class="main" role="main">
+        <section class="add-task-section" aria-labelledby="add-task-heading">
+          <h2 id="add-task-heading" class="visually-hidden">Add new task</h2>
+          <div class="add-task-form" role="form">
+            <label for="taskInput" class="visually-hidden">Task description</label>
+            <input
+              id="taskInput"
+              type="text"
+              placeholder="What needs to be done?"
+              autocomplete="off"
+              aria-describedby="add-task-hint"
+              aria-label="New task description"
+            />
+            <label for="dueDateInput" class="visually-hidden">Due date</label>
+            <input
+              id="dueDateInput"
+              type="date"
+              aria-label="Due date (optional)"
+            />
+            <label for="prioritySelect" class="visually-hidden">Priority</label>
+            <select
+              id="prioritySelect"
+              class="priority-select"
+              aria-label="Priority (optional)"
+            >
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+            <button id="addTaskBtn" type="button" class="btn btn-add" aria-label="Add task">
+              Add Task
             </button>
-            <button type="button" class="btn btn-social" aria-label="Continue with GitHub">
-              <span class="social-icon" aria-hidden="true">⌘</span>
-              GitHub
-            </button>
+            <p id="add-task-hint" class="hint visually-hidden" aria-live="polite">Press Enter to add</p>
           </div>
+        </section>
 
-          <p class="signup-hint">
-            Don’t have an account?
-            <a class="link" href="#">Sign up</a>
-          </p>
-        </form>
-      </section>
-    </main>
+        <div id="storageError" class="storage-error" role="alert" aria-live="assertive" hidden></div>
+        <div id="taskListAnnounce" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
 
-    <script src="script.js"></script>
+        <section class="filters-section" aria-labelledby="filters-heading">
+          <h2 id="filters-heading" class="visually-hidden">Task filters</h2>
+          <div class="filters" role="group" aria-label="Filter tasks">
+            <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-filter="active" aria-pressed="false">Active</button>
+            <button type="button" class="filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+            <button type="button" class="filter-btn" data-filter="overdue" aria-pressed="false">Overdue</button>
+          </div>
+        </section>
+
+        <section class="task-groups-section" aria-labelledby="task-groups-heading">
+          <h2 id="task-groups-heading" class="visually-hidden">Task groups</h2>
+          
+          <div class="task-group" id="todayGroup" aria-labelledby="today-heading">
+            <h3 id="today-heading" class="task-group-heading">Today</h3>
+            <ul id="todayList" class="task-list" aria-label="Today tasks"></ul>
+          </div>
+          
+          <div class="task-group" id="upcomingGroup" aria-labelledby="upcoming-heading">
+            <h3 id="upcoming-heading" class="task-group-heading">Upcoming</h3>
+            <ul id="upcomingList" class="task-list" aria-label="Upcoming tasks"></ul>
+          </div>
+          
+          <div class="task-group" id="somedayGroup" aria-labelledby="someday-heading">
+            <h3 id="someday-heading" class="task-group-heading">Someday</h3>
+            <ul id="somedayList" class="task-list" aria-label="Someday tasks"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js" defer></script>
   </body>
 </html>

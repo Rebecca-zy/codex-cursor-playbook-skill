@@ -31,6 +31,19 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
+<!--
+  ACTION REQUIRED: Replace this section with the concrete gates required by
+  `.specify/memory/constitution.md`. Gates MUST be explicit and checkable.
+
+  Example (adapt to your constitution):
+  - [ ] Architecture stays simple; no new abstraction without proven need
+  - [ ] Dependencies minimal; vanilla-first; any new dep justified + weighed
+  - [ ] Keyboard navigation works; focus visible; semantic labels present
+  - [ ] Core logic + local persistence are testable and have automated tests
+  - [ ] Initial render stays fast; no heavy runtime or blocking scripts
+  - [ ] Skeuomorphic styling is subtle, consistent, and accessibility-safe
+-->
+
 [Gates determined based on constitution file]
 
 ## Project Structure
