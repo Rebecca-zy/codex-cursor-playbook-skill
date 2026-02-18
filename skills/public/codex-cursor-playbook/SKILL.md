@@ -109,6 +109,15 @@ description: OpenAI Codex 与 Cursor Agent Skills 的通用实战手册。用于
 - 主 `SKILL.md` 保持精简；细节放到 `references/` 按需加载。
 - 重复且易错的步骤，优先固化为 `scripts/`，避免每次重写。
 
+## 新增实战技巧（2026-02-18：Cursor Agent + Spec-Kit）
+
+- 大任务（如 `/speckit.implement`）优先拆分为 US1 → US2 → US3 → US4 分步执行，避免“长时间无输出”导致的误判卡死。
+- 在 Free 计划场景下，`cursor-agent` 建议固定使用 `--model auto`，避免 `Named models unavailable` 直接失败。
+- 对委派指令增加约束：明确“只允许修改哪些运行文件”（例如仅 `index.html/styles.css/script.js`），防止代理新建旁路文件（如 `todo.*`）偏离主入口。
+- 每步强制交付“changed files + verification evidence”，优先要求可复核证据，而不是仅口头总结。
+- 当出现“无输出”时，先判断进程存活再决策：`等待` / `中断` / `拆步`，不要立即判定死锁。
+- 最终收口建议采用“代理生成 + 人工收尾”模式：清理多余文件、做验收、再提交。
+
 ## 参考资料
 
 - Codex 官方要点：`references/openai-codex-official-notes.zh.md`
