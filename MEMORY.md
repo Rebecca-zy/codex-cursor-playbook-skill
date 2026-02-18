@@ -8,3 +8,4 @@
   - push 到远程 GitHub 必须先获得用户明确许可；
   - 同步把经验写入本地 memory（如 `memory/YYYY-MM-DD.md`）。
 - PR 输出规范：每次提 PR 都必须给出三部分：变更摘要、验证点、风险说明。
+- 项目实现默认要求：每个项目都要考虑多端兼容与适配（mobile/tablet/desktop）。
