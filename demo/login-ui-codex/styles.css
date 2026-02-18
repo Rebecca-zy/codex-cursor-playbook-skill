@@ -508,24 +508,24 @@ select {
 
 .task-item {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-3) var(--spacing-4);
-  background: var(--bg-card);
+  background: #ffffff;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
   transition: background var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
-  animation: taskEnter 0.3s ease-out;
-  min-height: 60px;
+  animation: taskEnter 0.24s ease-out;
+  min-height: 52px;
   position: relative;
 }
 
 .task-item:hover {
-  border-color: var(--border-soft);
-  background: var(--bg-card-hover);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-medium);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
 }
 
 .task-item:active {
@@ -563,25 +563,43 @@ select {
 }
 
 .task-item input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: opacity var(--transition-fast);
-  padding: 12px;
-  margin: -12px;
-  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--border-medium);
+  border-radius: 5px;
+  background: #fff;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
   position: relative;
   align-self: center;
 }
 
+.task-item input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.task-item input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
 .task-item input[type="checkbox"]:hover {
-  opacity: 0.8;
+  border-color: var(--accent);
 }
 
 .task-item input[type="checkbox"]:active {
-  opacity: 0.6;
+  transform: scale(0.97);
 }
 
 .task-item input[type="checkbox"]:focus-visible {
@@ -597,21 +615,21 @@ select {
 .task-text-wrap {
   min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--spacing-2);
-  justify-content: center;
-  padding: 0 var(--spacing-3);
+  padding: 0;
   flex: 1;
-  align-items: flex-start;
 }
 
 .task-text {
   display: block;
   word-break: break-word;
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-relaxed);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
   color: var(--text);
+  margin-right: var(--spacing-1);
 }
 
 .task-due-date {
@@ -636,13 +654,12 @@ select {
 .task-priority {
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-normal);
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1.3;
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  border-radius: var(--radius-xs);
+  letter-spacing: 0;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
@@ -671,11 +688,12 @@ select {
 }
 
 .task-actions .btn {
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-sm);
+  padding: 6px 12px;
+  font-size: 14px;
   font-weight: var(--font-weight-normal);
   min-height: 36px;
-  min-width: 60px;
+  min-width: 56px;
+  border-radius: 12px;
   white-space: nowrap;
 }
 
@@ -829,15 +847,11 @@ select {
   .task-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    padding: 12px;
-    margin: -12px;
-    align-self: flex-start;
-    margin-top: var(--spacing-1);
+    align-self: center;
   }
   
   .task-text-wrap {
     grid-column: 2;
-    padding: 0 var(--spacing-2);
     gap: var(--spacing-2);
   }
   
@@ -937,10 +951,9 @@ select {
   }
   
   .task-text-wrap {
-    flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0 var(--spacing-3);
+    gap: var(--spacing-2);
   }
   
   .add-task-form {
