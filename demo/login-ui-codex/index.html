@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>待办事项 • 个人规划</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app" role="application" aria-label="待办事项应用">
+      <header class="header" role="banner">
+        <h1 id="app-title" class="title">我的任务</h1>
+      </header>
+
+      <main class="main" role="main">
+        <section class="add-task-section" aria-labelledby="add-task-heading">
+          <h2 id="add-task-heading" class="visually-hidden">添加新任务</h2>
+          <div class="add-task-form" role="form">
+            <label for="taskInput" class="visually-hidden">任务描述</label>
+            <input
+              id="taskInput"
+              type="text"
+              placeholder="需要做什么？"
+              autocomplete="off"
+              aria-describedby="add-task-hint"
+              aria-label="新任务描述"
+            />
+            <label for="dueDateInput" class="visually-hidden">截止日期</label>
+            <input
+              id="dueDateInput"
+              type="date"
+              aria-label="截止日期（可选）"
+            />
+            <label for="prioritySelect" class="visually-hidden">优先级</label>
+            <select
+              id="prioritySelect"
+              class="priority-select"
+              aria-label="优先级（可选）"
+            >
+              <option value="low">低</option>
+              <option value="medium" selected>中</option>
+              <option value="high">高</option>
+            </select>
+            <button id="addTaskBtn" type="button" class="btn btn-add" aria-label="添加任务">
+              添加任务
+            </button>
+            <p id="add-task-hint" class="hint visually-hidden" aria-live="polite">按回车键添加</p>
+          </div>
+        </section>
+
+        <div id="storageError" class="storage-error" role="alert" aria-live="assertive" hidden></div>
+        <div id="taskListAnnounce" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+
+        <section class="filters-section" aria-labelledby="filters-heading">
+          <h2 id="filters-heading" class="visually-hidden">任务筛选</h2>
+          <div class="filters" role="group" aria-label="筛选任务">
+            <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">全部</button>
+            <button type="button" class="filter-btn" data-filter="active" aria-pressed="false">进行中</button>
+            <button type="button" class="filter-btn" data-filter="completed" aria-pressed="false">已完成</button>
+            <button type="button" class="filter-btn" data-filter="overdue" aria-pressed="false">逾期</button>
+          </div>
+        </section>
+
+        <section class="task-groups-section" aria-labelledby="task-groups-heading">
+          <h2 id="task-groups-heading" class="visually-hidden">任务分组</h2>
+          
+          <div class="task-group" id="todayGroup" aria-labelledby="today-heading">
+            <h3 id="today-heading" class="task-group-heading">今天</h3>
+            <ul id="todayList" class="task-list" aria-label="今天的任务"></ul>
+          </div>
+          
+          <div class="task-group" id="upcomingGroup" aria-labelledby="upcoming-heading">
+            <h3 id="upcoming-heading" class="task-group-heading">即将到来</h3>
+            <ul id="upcomingList" class="task-list" aria-label="即将到来的任务"></ul>
+          </div>
+          
+          <div class="task-group" id="somedayGroup" aria-labelledby="someday-heading">
+            <h3 id="someday-heading" class="task-group-heading">某天</h3>
+            <ul id="somedayList" class="task-list" aria-label="某天的任务"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
